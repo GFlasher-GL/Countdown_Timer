@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="java.js">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Geri Sayım Sayacı (Countdown Timer) Uygulaması</h1>
+    <div id="countdown_container">
+        <div id="countdown_timer"></div>
+        <div style="clear:both"></div>
+    </div>
+
+    
+		<script>
+			var countDownDate = new Date("2035/04/28 08:00:53").getTime(); //geri sayılacak ileri zamanki bir tarih
+			var dayText	= "Day";
+			var hourText	= "Hour";
+			var minuteText	= "Minute";
+			var secondText	= "Second";
+			if (countDownDate){ //tarih var ise
+				var x = setInterval(function() { //sayacı belirli aralıklarla yenile
+					var now = new Date().getTime(); //şimdiki zamanı al
+					var distance = countDownDate - now; //geri sayılacak tarih ile şimdiki tarih arasındaki zaman farkını al
+					if (distance < 0) { //zaman farkı yok ise belirtilen zamanı geçti
+						clearInterval(x); //sayacı sil
+						$("#countdown_timer").html("Geri sayım yapılacak ileri bir tarih yoktur");
+					}else { //zaman farkı var ise
+						//aradaki zaman farkını gün,saat,dakika,saniye olarak böl
+						var days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+							hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+							minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+							seconds = Math.floor((distance % (1000 * 60)) / 1000),
+							days = (days?'<div><div>'+days+'</div><div>'+dayText+'</div></div>':''), //gun varsa gun degerini yaz
+							hours = (hours?'<div><div>'+hours+'</div><div>'+hourText+'</div></div>':''), //saat varsa saat degerini yaz
+							minutes = (minutes?'<div><div>'+minutes+'</div><div>'+minuteText+'</div></div>':''), //dakika varsa dakika degerini yaz
+							seconds = (seconds?'<div><div>'+seconds+'</div><div>'+secondText+'</div></div>':''); //saniye varsa saniye degerini yaz
+						document.getElementById("countdown_timer").innerHTML = days + hours + minutes + seconds; //yazdır
+					}
+				}, 1000); //1 saniyede bir sayaç güncellenecek
+			}
+		</script>
+</body>
+</html>
